@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="341.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.calcOverviewController">
+   <children>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="43.0" layoutY="36.0" prefHeight="26.0" prefWidth="64.0" text="Ост н дня:" textAlignment="CENTER" />
+                  <Label layoutX="287.0" layoutY="36.0" prefHeight="26.0" prefWidth="64.0" text="Ост к дня:" />
+                  <Label layoutX="43.0" layoutY="71.0" prefHeight="26.0" prefWidth="92.0" text="№ квитанций:" />
+                  <Label fx:id="startDayPrint" alignment="CENTER" layoutX="180.0" layoutY="38.0" prefHeight="23.0" prefWidth="60.0" text="0" />
+                  <Label fx:id="overDayPrint" alignment="CENTER" layoutX="391.0" layoutY="38.0" prefHeight="23.0" prefWidth="60.0" text="0" wrapText="false" />
+                  <Label fx:id="startOfReceiptPrint" alignment="CENTER" layoutX="143.0" layoutY="73.0" prefHeight="23.0" prefWidth="60.0" text="0" />
+                  <Label fx:id="endOfReceiptPrint" alignment="CENTER" layoutX="216.0" layoutY="72.0" prefHeight="23.0" prefWidth="60.0" text="0" />
+                  <Label alignment="CENTER" layoutX="203.0" layoutY="75.0" prefHeight="17.0" prefWidth="13.0" text="-" />
+                  <Label layoutX="287.0" layoutY="71.0" prefHeight="26.0" prefWidth="104.0" text="Сумма квитанций:" />
+                  <Label fx:id="sumReceiptPrint" alignment="CENTER" layoutX="391.0" layoutY="73.0" prefHeight="23.0" prefWidth="60.0" text="0" wrapText="false" />
+                  <Label layoutX="43.0" layoutY="105.0" prefHeight="26.0" prefWidth="64.0" text="Дата:" textAlignment="CENTER" />
+                  <Label fx:id="datePrint" alignment="CENTER" layoutX="113.0" layoutY="107.0" prefHeight="23.0" prefWidth="155.0" />
+                  <Label layoutX="287.0" layoutY="106.0" prefHeight="26.0" prefWidth="82.0" text="Пользователь:" textAlignment="CENTER" />
+                  <Label fx:id="userPrint" alignment="CENTER" layoutX="381.0" layoutY="108.0" prefHeight="23.0" prefWidth="60.0" />
+                  <Label layoutX="43.0" layoutY="132.0" prefHeight="26.0" prefWidth="64.0" text="Время:" textAlignment="CENTER" />
+                  <Label fx:id="timePrint" alignment="CENTER" layoutX="113.0" layoutY="134.0" prefHeight="23.0" prefWidth="155.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Button fx:id="b400" layoutX="25.0" layoutY="24.0" mnemonicParsing="false" onAction="#handle400" text="400" />
+                  <Button fx:id="b450" layoutX="78.0" layoutY="24.0" mnemonicParsing="false" onAction="#handle450" text="450" />
+                  <Button fx:id="b600" layoutX="130.0" layoutY="24.0" mnemonicParsing="false" onAction="#handle600" text="600" />
+                  <Button fx:id="b800" layoutX="25.0" layoutY="62.0" mnemonicParsing="false" onAction="#handle800" text="800" />
+                  <Button fx:id="b1200" layoutX="75.0" layoutY="62.0" mnemonicParsing="false" onAction="#handle1200" text="1200" />
+                  <Button fx:id="b1500" layoutX="127.0" layoutY="62.0" mnemonicParsing="false" onAction="#handle1500" text="1500" />
+                  <Button fx:id="b2250" layoutX="22.0" layoutY="101.0" mnemonicParsing="false" onAction="#handle2250" text="2250" />
+                  <Button fx:id="b3000" layoutX="75.0" layoutY="101.0" mnemonicParsing="false" onAction="#handle3000" text="3000" />
+                  <Button fx:id="b3600" layoutX="127.0" layoutY="101.0" mnemonicParsing="false" onAction="#handle3600" text="3600" />
+                  <Label layoutX="229.0" layoutY="66.0" text="Другая сумма :" />
+                  <TextField fx:id="anotherSum" layoutX="312.0" layoutY="62.0" onKeyPressed="#handleAction" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

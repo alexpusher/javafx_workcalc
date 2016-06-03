@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.newRepairController">
+   <children>
+      <TextField fx:id="date" layoutX="72.0" layoutY="34.0" promptText="Date" />
+      <TextField fx:id="address" layoutX="72.0" layoutY="76.0" promptText="Address" />
+      <TextField fx:id="phoneNumber" layoutX="72.0" layoutY="122.0" promptText="Phone Number" />
+      <TextField fx:id="typeProblem" layoutX="72.0" layoutY="167.0" promptText="Type of problem" />
+      <TextField fx:id="name" layoutX="72.0" layoutY="209.0" promptText="Name" />
+      <Label layoutX="108.0" layoutY="14.0" prefHeight="17.0" prefWidth="76.0" text="New Problem" />
+      <Button fx:id="bOk" layoutX="92.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleOk" text="Ok" />
+      <Button fx:id="bCancel" layoutX="146.0" layoutY="254.0" mnemonicParsing="false" onAction="#handleCan" text="Cancel" />
+   </children>
+</AnchorPane>

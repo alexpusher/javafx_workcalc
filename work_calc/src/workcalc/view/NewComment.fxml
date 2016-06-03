@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.newCommentController">
+   <children>
+      <Label alignment="CENTER" layoutX="121.0" layoutY="14.0" prefHeight="26.0" prefWidth="105.0" text="New Comment" textAlignment="CENTER" />
+      <TextField fx:id="comm" alignment="CENTER" layoutX="98.0" layoutY="69.0" promptText="Your comment" />
+      <Button layoutX="121.0" layoutY="124.0" mnemonicParsing="false" onAction="#bOk" text="Ok" />
+      <Button layoutX="174.0" layoutY="124.0" mnemonicParsing="false" onAction="#bCan" text="Cancel" />
+   </children>
+</AnchorPane>

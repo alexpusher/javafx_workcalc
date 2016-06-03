@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.EditStopConnController">
+   <children>
+      <TextField fx:id="date" layoutX="72.0" layoutY="34.0" promptText="Date" />
+      <TextField fx:id="view" layoutX="72.0" layoutY="76.0" promptText="View" />
+      <TextField fx:id="ip" layoutX="72.0" layoutY="122.0" promptText="Ip" />
+      <TextField fx:id="address" layoutX="72.0" layoutY="167.0" promptText="Address" />
+      <TextField fx:id="stopDate" layoutX="72.0" layoutY="209.0" promptText="Stop Date" />
+      <TextField fx:id="status" layoutX="72.0" layoutY="250.0" promptText="Status" />
+      <TextField fx:id="comment" layoutX="72.0" layoutY="292.0" promptText="Comment" />
+      <Label layoutX="108.0" layoutY="14.0" prefHeight="17.0" prefWidth="78.0" text="Edit StopConn" />
+      <Button fx:id="bOk" layoutX="134.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleOk" text="Ok" />
+   </children>
+</AnchorPane>

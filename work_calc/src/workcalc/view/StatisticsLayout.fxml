@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<SplitPane dividerPositions="0.9415094339622642" orientation="VERTICAL" prefHeight="593.0" prefWidth="827.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.statisticsLayoutController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="528.0">
+         <children>
+            <TableView fx:id="tableView" layoutX="103.0" layoutY="44.0" prefHeight="496.0" prefWidth="528.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                  <TableColumn fx:id="dateView" prefWidth="75.0" text="Date" />
+                <TableColumn fx:id="startDayView" prefWidth="96.0" text="Start of Day" />
+                  <TableColumn fx:id="endDayView" prefWidth="82.0" text="End of Day" />
+                  <TableColumn fx:id="startReceiptView" prefWidth="103.0" text="Start of Receipt" />
+                  <TableColumn fx:id="endReceiptView" prefWidth="98.0" text="End of Receipt" />
+                  <TableColumn fx:id="sumReceiptView" prefWidth="108.0" text="Sum of Receipt" />
+                  <TableColumn fx:id="userView" prefWidth="90.0" text="User" />
+                  <TableColumn fx:id="comment" prefWidth="172.0" text="Comment" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button layoutX="240.0" mnemonicParsing="false" onAction="#bComm" prefHeight="32.0" prefWidth="163.0" text="Create comment" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="422.0" AnchorPane.topAnchor="0.0" />
+            <Button layoutX="436.0" layoutY="3.0" mnemonicParsing="false" onAction="#bRem" prefHeight="32.0" prefWidth="163.0" text="Remove comment" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="436.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
