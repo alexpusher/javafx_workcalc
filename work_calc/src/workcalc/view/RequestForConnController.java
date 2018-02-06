@@ -74,7 +74,7 @@ public class RequestForConnController {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(new Scene(parent));
-        stage.setTitle("Request for Connection");
+        stage.setTitle("New Request for Connection");
         stage.setResizable(false);
         stage.showAndWait();
         refresh();
@@ -102,7 +102,7 @@ public class RequestForConnController {
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setScene(new Scene(parent));
-            stage.setTitle("Request for Connection");
+            stage.setTitle("Edit Request for Connection");
             stage.setResizable(false);
             stage.showAndWait();
             refresh();

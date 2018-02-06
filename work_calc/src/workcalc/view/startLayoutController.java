@@ -17,6 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import workcalc.Main;
 
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Optional;
 
 
@@ -34,11 +37,18 @@ public class startLayoutController {
     @FXML
     private Button bCan;
 
+    Connection con;
+    Statement stat;
+    ResultSet resSet;
+
 
     public startLayoutController()
     {
     }
-
+    @FXML
+    private void initialize() throws SQLException {
+        checkDate();
+    }
     @FXML
     private void handleOk(ActionEvent event) throws Exception
     {
@@ -50,54 +60,87 @@ public class startLayoutController {
         *Open CalcLayout(main page) and him controller calcOverviewController
         * Input text on this page transfer in static object in calcOverviewController
         */
-        if(event.getSource() == bOk)
+        if(event.getSource() == bOk && isInputValid())
         {
-            if(isInputValid())
-            {
                 ((Node) (event.getSource())).getScene().getWindow().hide();
                 calcOverviewController.calc.setStartDay(Integer.parseInt(balanceOnStart.getText()));
                 calcOverviewController.calc.setStartOfReceipt(Integer.parseInt(startOfReceipt.getText()));
                 calcOverviewController.calc.setEndOfReceipt(Integer.parseInt(startOfReceipt.getText())-1);
                 calcOverviewController.calc.setUser(userStart.getText());
                 BorderPane pane = FXMLLoader.load(getClass().getResource("RootLayout.fxml"));
-                Parent parent2 = FXMLLoader.load(getClass().getResource("CalcLayout.fxml"));
-                pane.setCenter(parent2);
+                Parent parent = FXMLLoader.load(getClass().getResource("CalcLayout.fxml"));
+                Parent parent2 = FXMLLoader.load(getClass().getResource("TextAreaLayout.fxml"));
+                pane.setCenter(parent);
+                pane.setBottom(parent2);
                 Stage stage = new Stage();
                 stage.setScene(new Scene(pane));
                 stage.setResizable(false);
-                stage.setTitle("CalcTest");
+                stage.setTitle("WorkCalc");
                 stage.show();
-            }
         }
-        if(event.getSource()==bCan)
+        if(event.getSource() == bCan)
         {
+            new Main().stop();
             System.exit(0);
         }
     }
     @FXML
     private void handleStart(KeyEvent event) throws Exception
     {
-        if(event.getCode() == KeyCode.ENTER)
+        if(event.getCode() == KeyCode.ENTER && isInputValid())
         {
-            if(isInputValid())
-            {
                 ((Node) (event.getSource())).getScene().getWindow().hide();
                 calcOverviewController.calc.setStartDay(Integer.parseInt(balanceOnStart.getText()));
                 calcOverviewController.calc.setStartOfReceipt(Integer.parseInt(startOfReceipt.getText()));
                 calcOverviewController.calc.setEndOfReceipt(Integer.parseInt(startOfReceipt.getText())-1);
                 calcOverviewController.calc.setUser(userStart.getText());
                 BorderPane pane = FXMLLoader.load(getClass().getResource("RootLayout.fxml"));
-                Parent parent2 = FXMLLoader.load(getClass().getResource("CalcLayout.fxml"));
-                pane.setCenter(parent2);
+                Parent parent = FXMLLoader.load(getClass().getResource("CalcLayout.fxml"));
+                Parent parent2 = FXMLLoader.load(getClass().getResource("TextAreaLayout.fxml"));
+                pane.setCenter(parent);
+                pane.setBottom(parent2);
                 Stage stage = new Stage();
                 stage.setScene(new Scene(pane));
                 stage.setResizable(false);
-                stage.setTitle("CalcTest");
+                stage.setTitle("WorkCalc");
                 stage.show();
-            }
         }
     }
-
+    public void checkDate() throws SQLException {
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -1);
+            String tmpDate = simpleDateFormat.format(cal.getTime());
+            con = null;
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:calcData.sqlite");
+            if(con != null)
+            {
+                System.out.println("123");
+            }
+            stat = con.createStatement();
+            resSet = stat.executeQuery("SELECT * FROM calc");
+            while(resSet.next()) {
+                if(resSet.getString("date").equals(tmpDate)) {
+                    balanceOnStart.setText(String.valueOf(resSet.getInt("overDay")));
+                    startOfReceipt.setText(String.valueOf(resSet.getInt("endOfReceipt")+1));
+                    break;
+                }else
+                {
+                    balanceOnStart.setText("");
+                    startOfReceipt.setText("");
+                }
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            stat.close();
+            con.close();
+        }
+    }
     private boolean isInputValid() {
         String errorMessage = "";
 

@@ -72,7 +72,7 @@ public class RequestForRepairController {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(new Scene(parent));
-        stage.setTitle("Request for Repair");
+        stage.setTitle("New Request for Repair");
         stage.setResizable(false);
         stage.showAndWait();
         refresh();

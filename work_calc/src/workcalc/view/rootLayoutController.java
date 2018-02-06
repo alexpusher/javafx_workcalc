@@ -79,14 +79,14 @@ public class rootLayoutController {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(new Scene(parent));
-        stage.setTitle("Request for Repair");
+        stage.setTitle("Request for Stop Connection");
         stage.setResizable(false);
         stage.showAndWait();
     }
 
     @FXML
     private void handleExit() throws IOException {
-        //simple exit without save data in db
+        //simple exit
         System.exit(0);
     }
 

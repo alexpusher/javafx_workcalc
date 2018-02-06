@@ -3,23 +3,17 @@ package workcalc.view;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -27,6 +21,8 @@ import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import workcalc.Main;
 import workcalc.model.calc;
 
@@ -79,116 +75,138 @@ public class calcOverviewController {
     private Connection con;
     private PreparedStatement stat;
 
+
+    public static boolean check;
     public static calc calc = new calc(0,0,0,0,0,null);
 
     @FXML
-    private void initialize()
-    {
-        try{
-            startDayPrint.setText(Integer.toString(calc.getStartDay()));
-            overDayPrint.setText(Integer.toString(calc.getOverDay()));
-            startOfReceiptPrint.setText(Integer.toString(calc.getStartOfReceipt()));
-            userPrint.setText(calc.getUser());
-            datePrint.setText(Date());
-            Clock();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+    private void initialize() throws SQLException {
+            if(check)
+            {
+                startDayPrint.setText(Integer.toString(calc.getStartDay()));
+                overDayPrint.setText(Integer.toString(calc.getOverDay()));
+                startOfReceiptPrint.setText(Integer.toString(calc.getStartOfReceipt()));
+                userPrint.setText(calc.getUser());
+                datePrint.setText(Date());
+                calc.setOverDay(calc.getStartDay());
+                Clock();
+                update();
+            }else
+            {
+                startDayPrint.setText(Integer.toString(calc.getStartDay()));
+                overDayPrint.setText(Integer.toString(calc.getOverDay()));
+                startOfReceiptPrint.setText(Integer.toString(calc.getStartOfReceipt()));
+                endOfReceiptPrint.setText(Integer.toString(calc.getEndOfReceipt()));
+                sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
+                userPrint.setText(calc.getUser());
+                datePrint.setText(Date());
+                Clock();
+            }
     }
     @FXML
-    private void handle400()
-    {
+    private void handle400() throws SQLException {
         int i = Integer.parseInt(b400.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay() + calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt()+i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        new TextAreaController().appendText(String.valueOf(calc.getEndOfReceipt()), b400.getText());
+        update();
     }
     @FXML
-    private void handle450()
-    {
+    private void handle450() throws SQLException {
         int i = Integer.parseInt(b450.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt()+i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle600()
-    {
+    private void handle600() throws SQLException {
         int i = Integer.parseInt(b600.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle800()
-    {
+    private void handle800() throws SQLException {
         int i = Integer.parseInt(b800.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle1200()
-    {
+    private void handle1200() throws SQLException {
         int i = Integer.parseInt(b1200.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle1500()
-    {
+    private void handle1500() throws SQLException {
         int i = Integer.parseInt(b1500.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle2250()
-    {
+    private void handle2250() throws SQLException {
         int i = Integer.parseInt(b2250.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle3000()
-    {
+    private void handle3000() throws SQLException {
         int i = Integer.parseInt(b3000.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt()+i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handle3600()
-    {
+    private void handle3600() throws SQLException {
         int i = Integer.parseInt(b3600.getText());
         calc.setOverDay(calc.getOverDay()+ i);
-        calc.setSumReceipt(calc.getOverDay());
-        overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+        calc.setSumReceipt(calc.getSumReceipt() + i);
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
         sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
         endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+        update();
     }
     @FXML
-    private void handleAction(KeyEvent event)
-    {
+    private void handleGetMoney() throws IOException, SQLException {
+        Parent parent = FXMLLoader.load(getClass().getResource("getMoneyLayout.fxml"));
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setScene(new Scene(parent));
+        stage.setTitle("Get Money");
+        stage.showAndWait();
+        update();
+        overDayPrint.setText(Integer.toString(calc.getOverDay()));
+    }
+    @FXML
+    private void handleAction(KeyEvent event) throws SQLException {
         if(event.getCode() == KeyCode.ENTER)
         {
             try{
@@ -196,19 +214,21 @@ public class calcOverviewController {
                 if(i > 0)
                 {
                     calc.setOverDay(calc.getOverDay()+ i);
-                    calc.setSumReceipt(calc.getOverDay());
-                    overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+                    calc.setSumReceipt(calc.getSumReceipt()+i);
+                    overDayPrint.setText(Integer.toString(calc.getOverDay()));
                     sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
                     endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+                    update();
                     anotherSum.setText("");
                 }else
                 if(i < 0)
                 {
                     calc.setOverDay(calc.getOverDay()+ i);
-                    calc.setSumReceipt(calc.getOverDay());
-                    overDayPrint.setText(Integer.toString(calc.getOverDay()+calc.getStartDay()));
+                    calc.setSumReceipt(calc.getSumReceipt()+i);
+                    overDayPrint.setText(Integer.toString(calc.getOverDay()));
                     sumReceiptPrint.setText(Integer.toString(calc.getSumReceipt()));
                     endOfReceiptPrint.setText(Integer.toString(calc.deCountReceipt()));
+                    update();
                     anotherSum.setText("");
                 }
                 else
@@ -220,11 +240,13 @@ public class calcOverviewController {
                 if (anotherSum.getText().equals("+0.1"))
                 {
                     endOfReceiptPrint.setText(Integer.toString(calc.countReceipt()));
+                    update();
                     anotherSum.setText("");
                 }else
                 if(anotherSum.getText().equals("-0.1"))
                 {
                     endOfReceiptPrint.setText(Integer.toString(calc.deCountReceipt()));
+                    update();
                     anotherSum.setText("");
                 }
                 else
@@ -258,21 +280,18 @@ public class calcOverviewController {
                 if(timePrint.getText().equals("23:03:15"))
                 {
                     try {
-                        save();
+                        update();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     close();
                 }
-
-
-
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-    private String Minute()
+    public String Minute()
     {
         //for correct display minute
         int i = LocalTime.now().getMinute();
@@ -282,7 +301,7 @@ public class calcOverviewController {
         }
         return String.valueOf(i);
     }
-    private String Second()
+    public String Second()
     {
         //for correct display second
         int i = LocalTime.now().getSecond();
@@ -301,39 +320,31 @@ public class calcOverviewController {
             }
         }, 1000);
     }
-    private void save() throws SQLException {
-        //before as use close window need save data in db
-        calc.setOverDay(calc.getStartDay()+calc.getOverDay());
+
+    public void update() throws SQLException {
         try
         {
+
             con = null;
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:calcData.sqlite");
-            if(con == null)
-            {
-                System.out.println("");
-            }else
-            {
-                System.out.println("123");
-            }
-            String sql= "INSERT INTO 'calc'('startDay','overDay','startOfReceipt','endOfReceipt','sumReceipt','user','date') VALUES(?,?,?,?,?,?,?)";
+            String sql= "UPDATE calc SET startDay = ?, overDay = ?, startOfReceipt = ?, endOfReceipt = ?, sumReceipt = ?, user = ?" +
+                    "where date = ?;";
             stat = con.prepareStatement(sql);
-            stat.setInt(1,calc.getStartDay());
-            stat.setInt(2,calc.getOverDay());
-            stat.setInt(3,calc.getStartOfReceipt());
-            stat.setInt(4,calc.getEndOfReceipt());
-            stat.setInt(5,calc.getSumReceipt());
-            stat.setString(6,calc.getUser());
-            stat.setString(7,Date());
+            stat.setInt(1, calc.getStartDay());
+            stat.setInt(2, calc.getOverDay());
+            stat.setInt(3, calc.getStartOfReceipt());
+            stat.setInt(4, calc.getEndOfReceipt());
+            stat.setInt(5, calc.getSumReceipt());
+            stat.setString(6, calc.getUser());
+            stat.setString(7, Date());
             stat.executeUpdate();
         }catch (Exception e)
         {
             e.printStackTrace();
-        }
-        finally {
+        }finally {
             stat.close();
             con.close();
         }
     }
-
 }

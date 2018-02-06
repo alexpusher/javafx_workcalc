@@ -21,8 +21,7 @@ public class calc {
     private SimpleStringProperty comment;
 
 
-    public calc(int overDay, String date) {
-        this.overDay = new SimpleIntegerProperty(overDay);
+    public calc(String date) {
         this.date = new SimpleStringProperty(date);
     }
 
@@ -35,15 +34,6 @@ public class calc {
         this.user = new SimpleStringProperty(user);
     }
 
-    public calc(int startDay, int overDay, int startOfReceipt, int endOfReceipt, int sumReceipt, String user, String date) {
-        this.startDay = new SimpleIntegerProperty(startDay);
-        this.overDay = new SimpleIntegerProperty(overDay);
-        this.startOfReceipt = new SimpleIntegerProperty(startOfReceipt);
-        this.endOfReceipt = new SimpleIntegerProperty(endOfReceipt);
-        this.sumReceipt = new SimpleIntegerProperty(sumReceipt);
-        this.user = new SimpleStringProperty(user);
-        this.date = new SimpleStringProperty(date);
-    }
     public calc(int startDay, int overDay, int startOfReceipt, int endOfReceipt, int sumReceipt, String user, String date, String comment) {
         this.startDay = new SimpleIntegerProperty(startDay);
         this.overDay = new SimpleIntegerProperty(overDay);

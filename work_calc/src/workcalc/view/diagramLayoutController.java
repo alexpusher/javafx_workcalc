@@ -61,51 +61,51 @@ public class diagramLayoutController {
                 int tmp1 = Integer.parseInt(tmp.substring(3,5));
                 if(tmp1 == 1)
                 {
-                    i[0] += resSet.getInt("overDay");
+                    i[0] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 2)
                 {
-                    i[1] += resSet.getInt("overDay");
+                    i[1] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 3)
                 {
-                    i[2] += resSet.getInt("overDay");
+                    i[2] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 4)
                 {
-                    i[3] += resSet.getInt("overDay");
+                    i[3] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 5)
                 {
-                    i[4] += resSet.getInt("overDay");
+                    i[4] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 6)
                 {
-                    i[5] += resSet.getInt("overDay");
+                    i[5] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 7)
                 {
-                    i[6] += resSet.getInt("overDay");
+                    i[6] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 8)
                 {
-                    i[7] += resSet.getInt("overDay");
+                    i[7] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 9)
                 {
-                    i[8] += resSet.getInt("overDay");
+                    i[8] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 10)
                 {
-                    i[9] += resSet.getInt("overDay");
+                    i[9] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 11)
                 {
-                    i[10] += resSet.getInt("overDay");
+                    i[10] += resSet.getInt("sumReceipt");
                 }
                 if(tmp1 == 12)
                 {
-                    i[11] += resSet.getInt("overDay");
+                    i[11] += resSet.getInt("sumReceipt");
                 }
             }
             for(int a = 0; a<i.length; a++)

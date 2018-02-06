@@ -78,7 +78,7 @@ public class RequestForStopConnController {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(new Scene(parent));
-        stage.setTitle("Request for Connection");
+        stage.setTitle("New Request for Stop Connection");
         stage.setResizable(false);
         stage.showAndWait();
         refresh();
@@ -106,7 +106,7 @@ public class RequestForStopConnController {
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setScene(new Scene(parent));
-            stage.setTitle("Request for Connection");
+            stage.setTitle("Edit Request for Stop Connection");
             stage.setResizable(false);
             stage.showAndWait();
             refresh();

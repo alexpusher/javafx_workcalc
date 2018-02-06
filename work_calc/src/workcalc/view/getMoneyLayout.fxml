@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="workcalc.view.getMoneyController">
+   <children>
+      <TextField fx:id="comm" layoutX="71.0" layoutY="65.0" promptText="Comment" />
+      <TextField fx:id="money" layoutX="71.0" layoutY="126.0" promptText="Money" />
+      <Label layoutX="73.0" layoutY="14.0" prefHeight="25.0" prefWidth="157.0" text="Забираем деньги из кассы:" />
+      <Label layoutX="73.0" layoutY="39.0" prefHeight="25.0" prefWidth="146.0" text="На что?" />
+      <Label layoutX="73.0" layoutY="96.0" prefHeight="25.0" prefWidth="77.0" text="И сколько?" />
+      <Button layoutX="96.0" layoutY="159.0" mnemonicParsing="false" onAction="#bOk" text="Ok" />
+      <Button layoutX="145.0" layoutY="159.0" mnemonicParsing="false" onAction="#bCan" text="Cancel" />
+   </children>
+</AnchorPane>

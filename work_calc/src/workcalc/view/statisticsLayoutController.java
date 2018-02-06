@@ -14,6 +14,7 @@ import workcalc.model.calc;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Optional;
 
 public class statisticsLayoutController {
     private ObservableList<calc> data = FXCollections.observableArrayList();
@@ -43,11 +44,6 @@ public class statisticsLayoutController {
     @FXML
     private TableColumn<calc, String> comment;
 
-
-
-
-
-
     @FXML
     private void initialize() throws SQLException {
         sql();
@@ -69,18 +65,12 @@ public class statisticsLayoutController {
         if(index>=0)
         {
             calc calc = data.get(index);
-            newCommentController.calc.setStartDay(calc.getStartDay());
-            newCommentController.calc.setOverDay(calc.getOverDay());
-            newCommentController.calc.setStartOfReceipt(calc.getStartOfReceipt());
-            newCommentController.calc.setEndOfReceipt(calc.getEndOfReceipt());
-            newCommentController.calc.setSumReceipt(calc.getSumReceipt());
-            newCommentController.calc.setUser(calc.getUser());
-            System.out.println(calc.getDate());
+            newCommentController.calc.setDate(calc.getDate());
             Parent parent = FXMLLoader.load(getClass().getResource("NewComment.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setScene(new Scene(parent));
-            stage.setTitle("Request for Connection");
+            stage.setTitle("Comment");
             stage.showAndWait();
             refresh();
         }else
@@ -98,8 +88,50 @@ public class statisticsLayoutController {
         if(index>=0)
         {
             calc calc = data.get(index);
-            RemCommFromLine("",calc.getStartDay(),calc.getOverDay(),calc.getStartOfReceipt(),calc.getEndOfReceipt(),calc.getSumReceipt(),calc.getUser());
+            String tmp = calc.getComment();
+            try{
+                UpdateDb(tmp.substring(0,tmp.lastIndexOf("\n")), calc.getDate());
+            }catch (StringIndexOutOfBoundsException e)
+            {
+               UpdateDb("", calc.getDate());
+            }
             refresh();
+        }else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Nothing Selected!!!");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    private void bRemCell() throws SQLException {
+        //delete cell from line and db
+        int index = tableView.getSelectionModel().getSelectedIndex();
+        if(index>=0)
+        {
+            calc calc = data.get(index);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete cell");
+            alert.setHeaderText("Start of Day: " + String.valueOf(calc.getStartDay()) + "\n" +
+                                "End of Day: " + String.valueOf(calc.getOverDay()) + "\n" +
+                                "Start of Receipt: " + String.valueOf(calc.getStartOfReceipt()) + "\n" +
+                                "End of Receipt: " + String.valueOf(calc.getEndOfReceipt()) + "\n" +
+                                "Sum of Receipt: " + String.valueOf(calc.getSumReceipt()) + "\n" +
+                                "User: " + String.valueOf(calc.getUser()) + "\n" +
+                                "Date: " + String.valueOf(calc.getDate()) + "\n" +
+                                "Comment: " + String.valueOf(calc.getComment()));
+            alert.setContentText("Are you sure you want to delete cell with data?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == ButtonType.OK)
+            {
+                delete(String.valueOf(calc.getDate()));
+                refresh();
+            }
+            else
+            {
+                refresh();
+            }
         }else
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -154,53 +186,60 @@ public class statisticsLayoutController {
 
         }
     }
-    public void UpdateDb(String comment, int startDay, int overDay, int startOfReceipt, int endOfReceipt, int sumReceipt, String user) throws SQLException {
+    public void UpdateDb(String comment, String date) throws SQLException {
         try {
             sql();
-            String sql= "UPDATE calc SET comment = ? where startDay = ? AND overDay = ? AND startOfReceipt = ? AND endOfReceipt = ? AND sumReceipt = ? AND user = ?;";
+            String sql= "UPDATE calc SET comment = ? where date = ?;";
             preStat = conn.prepareStatement(sql);
             preStat.setString(1, comment);
-            preStat.setInt(2, startDay);
-            preStat.setInt(3, overDay);
-            preStat.setInt(4, startOfReceipt);
-            preStat.setInt(5, endOfReceipt);
-            preStat.setInt(6, sumReceipt);
-            preStat.setString(7, user);
+            preStat.setString(2, date);
             preStat.executeUpdate();
-
         }catch (Exception e)
         {
             e.printStackTrace();
         }
         finally {
-            //resSet.close();
             preStat.close();
             conn.close();
-
         }
     }
-    public void RemCommFromLine(String comment,  int startDay, int overDay, int startOfReceipt, int endOfReceipt, int sumReceipt, String user) throws SQLException {
-        try {
+    public String readString(String date) throws SQLException {
+        String tmp = "";
+        try{
             sql();
-            String sql= "UPDATE calc set comment = ? where startDay = ? AND overDay = ? AND startOfReceipt = ? AND endOfReceipt = ? AND sumReceipt = ? AND user = ?;";
-            preStat = conn.prepareStatement(sql);
-            preStat.setString(1, comment);
-            preStat.setInt(2, startDay);
-            preStat.setInt(3, overDay);
-            preStat.setInt(4, startOfReceipt);
-            preStat.setInt(5, endOfReceipt);
-            preStat.setInt(6, sumReceipt);
-            preStat.setString(7, user);
-            preStat.executeUpdate();
-
-        }catch (Exception e)
+            stat = conn.createStatement();
+            resSet = stat.executeQuery("SELECT * FROM calc");
+            while(resSet.next())
+            {
+                if(resSet.getString("date").equals(date))
+                {
+                    tmp = resSet.getString("comment");
+                }
+            }
+        }catch(Exception e)
         {
             e.printStackTrace();
-        }
-        finally {
-            preStat.close();
+        }finally {
+            resSet.close();
+            stat.close();
             conn.close();
-
+        }
+        return tmp;
+    }
+    private void delete(String date) throws SQLException {
+        try{
+            sql();
+            stat = conn.createStatement();
+            String sql= "DELETE FROM calc where date = ? ;";
+            preStat = conn.prepareStatement(sql);
+            preStat.setString(1, date);
+            preStat.executeUpdate();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            resSet.close();
+            stat.close();
+            conn.close();
         }
     }
     private ObservableList<calc> getList()

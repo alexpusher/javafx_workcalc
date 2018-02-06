@@ -8,31 +8,43 @@ import javafx.scene.control.TextField;
 import workcalc.model.calc;
 
 import java.sql.SQLException;
-
+import java.time.LocalTime;
 
 
 public class newCommentController {
     @FXML
-    TextField comm;
+    private TextField comm;
 
-    public static calc calc = new calc(0,0,0,0,0,null);
+    public static calc calc = new calc(null);
+    private statisticsLayoutController sl = new statisticsLayoutController();
+    private String tmp;
+
     @FXML
     private void initialize()
-    {}
+    {
+    }
 
     @FXML
     private void bOk(ActionEvent event) throws SQLException {
         //use method in statistics for update line
         if(isInputValid())
         {
-            new statisticsLayoutController().UpdateDb(comm.getText(),
-                                                      calc.getStartDay(),
-                                                      calc.getOverDay(),
-                                                      calc.getStartOfReceipt(),
-                                                      calc.getEndOfReceipt(),
-                                                      calc.getSumReceipt(),
-                                                      calc.getUser());
-            ((Node) (event.getSource())).getScene().getWindow().hide();
+            tmp = sl.readString(calc.getDate());
+            if(tmp.equals(""))
+            {
+                tmp = String.valueOf(LocalTime.now().getHour())+ ":"
+                        + new calcOverviewController().Minute() + ":"
+                        + new calcOverviewController().Second() + " : "  + comm.getText();
+                sl.UpdateDb(tmp,calc.getDate());
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+            }else
+            {
+                tmp += "\n" + String.valueOf(LocalTime.now().getHour())+ ":"
+                        + new calcOverviewController().Minute() + ":"
+                        + new calcOverviewController().Second() + " : " + comm.getText();
+                sl.UpdateDb(tmp,calc.getDate());
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+            }
         }
     }
     @FXML
@@ -44,10 +56,10 @@ public class newCommentController {
 
     private boolean isInputValid()
     {
-        String errorMessage="";
+        String errorMessage = "";
         if(comm.getText()== null || comm.getText().length() == 0)
         {
-            errorMessage +="The comment is not entered!\n";
+            errorMessage += "The comment is not entered!\n";
         }
         if(errorMessage.length() == 0)
         {
